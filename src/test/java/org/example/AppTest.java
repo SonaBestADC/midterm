@@ -35,4 +35,21 @@ public class AppTest
     {
         assertTrue( true );
     }
+
+    public void testAdd(){
+        assertEquals(10, App.add(5,5));
+    }
+
+    public void testSub(){
+        assertEquals(5, App.subtract(10, 5));
+    }
+
+    public void testMultiply(){
+        assertEquals(10, App.multiply(2, 5));
+    }
+
+    public void testDivide(){
+        assertEquals(5, App.divide(10, 2));
+    }
 }
+
