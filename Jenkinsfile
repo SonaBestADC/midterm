@@ -13,15 +13,15 @@ pipeline {
             }
         }
 
-        stage('Build with Gradle') {
+        stage('Build with Maven') {
             steps {
-                sh 'gradle clean build'
+                sh 'mvn clean package'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'gradle test'
+                sh 'mvn test'
             }
         }
 
@@ -39,23 +39,22 @@ pipeline {
                     sh "docker stop $DOCKER_IMAGE || true"
                     sh "docker rm $DOCKER_IMAGE || true"
                     sh """
-                    docker run -d --name $DOCKER_IMAGE \\
-                        --network=host \\
+                    docker run -d --name calculator-container \\
+                        -p 8080:8080 \\
                         $DOCKER_IMAGE:$DOCKER_TAG
                     """
                 }
             }
         }
     }
+
     post {
-        always {
-            script {
-            }
-        }
         success {
             echo 'Pipeline completed successfully!'
         }
         failure {
             echo 'Pipeline failed. Check logs for details.'
         }
-    }}
+    }
+}
+
